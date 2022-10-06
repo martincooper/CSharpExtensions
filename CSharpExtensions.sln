@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpExtensions", "CSharpExtensions\CSharpExtensions.csproj", "{4969FB97-6F14-4AB9-B504-9F84AD89A4A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpExtensions.Tests", "CSharpExtensions.Tests\CSharpExtensions.Tests.csproj", "{5AC194C6-5458-4C19-9AC0-566795B070E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{4969FB97-6F14-4AB9-B504-9F84AD89A4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4969FB97-6F14-4AB9-B504-9F84AD89A4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4969FB97-6F14-4AB9-B504-9F84AD89A4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AC194C6-5458-4C19-9AC0-566795B070E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AC194C6-5458-4C19-9AC0-566795B070E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AC194C6-5458-4C19-9AC0-566795B070E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AC194C6-5458-4C19-9AC0-566795B070E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
