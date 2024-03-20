@@ -15,8 +15,8 @@ public class LanguageExtExtensionsTests
         var result = myTry.MapFail(new ArgumentException("Wrapped Error"));
         
         Assert.IsTrue(result.IsFail());
-        Assert.AreEqual(null, result.GetException().ValueUnsafe().InnerException);
-        Assert.AreEqual("Wrapped Error", result.GetException().ValueUnsafe().Message);
+        Assert.AreEqual(null, result.GetException().InnerException);
+        Assert.AreEqual("Wrapped Error", result.GetException().Message);
     }
     
     [Test]
@@ -26,7 +26,7 @@ public class LanguageExtExtensionsTests
         var result = myTry.MapFail(ex => new ArgumentException("Wrapped Error", ex));
         
         Assert.IsTrue(result.IsFail());
-        Assert.AreEqual("Original Error", result.GetException().ValueUnsafe().InnerException?.Message);
-        Assert.AreEqual("Wrapped Error", result.GetException().ValueUnsafe().Message);
+        Assert.AreEqual("Original Error", result.GetException().InnerException?.Message);
+        Assert.AreEqual("Wrapped Error", result.GetException().Message);
     }
 }

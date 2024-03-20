@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using LanguageExt;
-using LanguageExt.UnsafeValueAccess;
 using static LanguageExt.Prelude;
 
 namespace CSharpExtensions
@@ -13,11 +11,13 @@ namespace CSharpExtensions
         /// <summary>
         /// Returns a Some/Exception if it's in a Fail state.
         /// </summary>
-        /// <param name="try">The try item.</param>
+        /// <param name="tryValue">The try item.</param>
         /// <typeparam name="T">The try type.</typeparam>
         /// <returns>Returns the exception.</returns>
-        public static Option<Exception> GetException<T>(this Try<T> @try) =>
-            @try.Match(v => Option<Exception>.None, Some);
+        public static Exception GetException<T>(this Try<T> tryValue) =>
+            tryValue.Match(
+                Succ: val => throw new ApplicationException("Error getting an exception from a Try with Success state."),
+                Fail: err => err);
 
         public static TType GetValue<TType>(this Try<TType> tryValue) =>
             tryValue.Match(
@@ -110,15 +110,15 @@ namespace CSharpExtensions
                 .Select(item => item.GetValue())
                 .ToArray();
         
-        public static Exception[] GetFailuress<T>(this IEnumerable<Try<T>> items) =>
+        public static Exception[] GetFailures<T>(this IEnumerable<Try<T>> items) =>
             items
                 .Where(item => item.IsFail())
-                .Select(item => item.GetException().ValueUnsafe())
+                .Select(item => item.GetException())
                 .ToArray();
 
         public static (T[] Successes, Exception[] Failures) Partition<T>(this IEnumerable<Try<T>> items) =>
             items
                 .ToArray()
-                .MapTo(i => (Successes: i.GetSuccesses(), Failures: i.GetFailuress()));
+                .MapTo(i => (Successes: i.GetSuccesses(), Failures: i.GetFailures()));
     }
 }
