@@ -19,4 +19,12 @@
       <ProjectReference Include="..\CSharpExtensions\CSharpExtensions.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="TestSample.xml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\TestSample.xml" />
+    </ItemGroup>
+
 </Project>
