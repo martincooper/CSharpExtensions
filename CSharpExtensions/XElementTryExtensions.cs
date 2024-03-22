@@ -25,6 +25,33 @@ namespace CSharpExtensions
         /// </summary>
         /// <param name="element">The starting element.</param>
         /// <param name="pathNames">The path names to the attribute.</param>
+        /// <returns></returns>
+        public static Try<string> TryAttributeValue(this XElement element, params string[] pathNames) =>
+            Try(element).TryAttributeValue<string>(pathNames);
+        
+        /// <summary>
+        /// Returns the value of the specified attribute.
+        /// </summary>
+        /// <param name="element">The starting element.</param>
+        /// <param name="pathNames">The path names to the attribute.</param>
+        /// <returns></returns>
+        public static Try<TResult> TryAttributeValue<TResult>(this XElement element, params string[] pathNames) =>
+            Try(element).TryAttributeValue<TResult>(pathNames);
+        
+        /// <summary>
+        /// Returns the value of the specified attribute.
+        /// </summary>
+        /// <param name="element">The starting element.</param>
+        /// <param name="pathNames">The path names to the attribute.</param>
+        /// <returns></returns>
+        public static Try<string> TryAttributeValue(this Try<XElement> element, params string[] pathNames) =>
+            element.TryAttributeValue<string>(pathNames);
+        
+        /// <summary>
+        /// Returns the value of the specified attribute.
+        /// </summary>
+        /// <param name="element">The starting element.</param>
+        /// <param name="pathNames">The path names to the attribute.</param>
         /// <typeparam name="TResult">The result type.</typeparam>
         /// <returns></returns>
         public static Try<TResult> TryAttributeValue<TResult>(this Try<XElement> element, params string[] pathNames) =>
@@ -42,16 +69,42 @@ namespace CSharpExtensions
 
         //// *** Element Values ***
 
-        
-        
+        /// <summary>
+        /// Returns the value of the specified element.
+        /// </summary>
+        /// <param name="element">The starting / parent element.</param>
+        /// <param name="elementNames">The child element names.</param>
+        /// <returns></returns>
+        public static Try<string> TryElementValue(this XElement element, params string[] elementNames) =>
+            element.TryElementValue<string>(elementNames);
+
+        /// <summary>
+        /// Returns the value of the specified element.
+        /// </summary>
+        /// <param name="element">The starting / parent element.</param>
+        /// <param name="elementNames">The child element names.</param>
+        /// <returns></returns>
         public static Try<TResult> TryElementValue<TResult>(this XElement element, params string[] elementNames) =>
             element
                 .TryElementAt(elementNames)
-                .Bind(elem => elem.Va)
+                .Bind(elem => elem.Value.ConvertToType<TResult>());
         
+        /// <summary>
+        /// Returns the value of the specified element.
+        /// </summary>
+        /// <param name="element">The starting / parent element.</param>
+        /// <param name="elementNames">The child element names.</param>
+        /// <returns></returns>
         public static Try<string> TryElementValue(this Try<XElement> element, params string[] elementNames) =>
-            element.Bind(elem => elem.TryElementValue<TResult>(elementNames));
+            element.Bind(elem => elem.TryElementValue(elementNames));
 
+        /// <summary>
+        /// Returns the value of the specified element.
+        /// </summary>
+        /// <param name="element">The starting / parent element.</param>
+        /// <param name="elementNames">The child element names.</param>
+        /// <typeparam name="TResult">The result type.</typeparam>
+        /// <returns></returns>
         public static Try<TResult> TryElementValue<TResult>(this Try<XElement> element, params string[] elementNames) =>
             element.Bind(elem => elem.TryElementValue<TResult>(elementNames));
         
