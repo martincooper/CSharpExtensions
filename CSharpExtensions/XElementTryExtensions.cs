@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using LanguageExt;
@@ -180,5 +182,28 @@ namespace CSharpExtensions
             items
                 .Take(items.Length - 1)
                 .ToArray();
+
+        /// <summary>
+        /// Builds a new XElement removing all namespaces from the original.
+        /// </summary>
+        /// <param name="element">The parent element.</param>
+        public static Try<XElement> TryRemoveAllNamespaces(XElement element) =>
+            Try(() => RemoveAllNamespaces(element));
+        
+        private static XElement RemoveAllNamespaces(XElement element) =>
+            new XElement(element.Name.LocalName,
+                from node in element.Nodes()
+                select node is XElement elem
+                    ? RemoveAllNamespaces(elem)
+                    : node,
+                element.HasAttributes
+                    ? RemoveNamespacesFromAttributes(element)
+                    : Enumerable.Empty<XAttribute>());
+        
+        public static IEnumerable<XAttribute> RemoveNamespacesFromAttributes(XElement element) =>
+            from attribute in element.Attributes()
+            where !attribute.IsNamespaceDeclaration
+            select new XAttribute(attribute.Name.LocalName, attribute.Value);
+
     }
 }
